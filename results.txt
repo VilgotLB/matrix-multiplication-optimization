@@ -1,3 +1,6 @@
+PROBLEM 2:
+
+
 vector of vectors:
 
 ijk: 110694
@@ -249,4 +252,65 @@ non-square packing:
 i=256 j=1024 k=256 (best I found): 1580
 
 
+NON-SQUARE PACKING: 1580
 NUMPY SINGE THREADED: 333
+
+
+
+-------------------------------------------------------------------------
+
+
+PROBLEM 3:
+
+
+
+ikj: 1349
+
+blocking:
+2: 1653
+4: 930
+8: 659
+16: 477
+32: 456
+64: 533
+128: 432
+256: 1350
+512: 1723
+1024: 2723
+2048: 4320
+
+packing:
+2: 4868
+4: 1268
+8: 556
+16: 420
+32: 392
+64: 342
+128: 336
+256: 465
+512: 977
+1024: 2690
+2048: 4361
+
+blocking non-square:
+i=8, j=2048, k=2: 357
+
+packing non-square:
+i=128, j=128, k=128: 342
+
+regular packing fastest
+
+schedules (static, dynamic, guided, auto)
+for packing, size 32, 64, 128
+no improvement (too few iterations to matter, similar workload)
+
+#threads:
+1: 1692
+2: 920
+4: 563
+8: 426
+16: 340
+
+
+packing: 336
+NUMPY DEFAULT: 236
