@@ -265,11 +265,13 @@ int main() {
 
     std::cout << execution_time << '\n';
 
-    test(matrix_a, matrix_b, result_matrix, N);
+    
+    //test(matrix_a, matrix_b, result_matrix, N);
     
     delete[] matrix_a;
     delete[] matrix_b;
     delete[] result_matrix;
+    
     
     return 0;
 }

@@ -39,7 +39,7 @@ void multiply(const std::vector<std::vector<double>>& matrix_a, const std::vecto
 }
 
 int main() {
-    const int N = 1024;
+    const int N = 2048;
 
     auto matrix_a = generate_matrix(N);
     auto matrix_b = generate_matrix(N);
