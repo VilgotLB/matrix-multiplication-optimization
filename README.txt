@@ -25,7 +25,7 @@ For matmul_ikj_arr and below:
 
 * Change generate_matrix to generate_matrix_arr for both A and B in main
 * Change generate_empty to generate_empty_arr in main
-* Uncomment lines 271-273 to deallocate the arrays after use
+* Uncomment lines 272-274 to deallocate the arrays after use
 
 For matmul_ikj_arr_blocking and below:
 
@@ -40,7 +40,7 @@ For matmul_ikj_arr_blocking_vector_aligned and below:
 * Set align to true in generate_matrix_arr and generate_empty_arr
 
 Verify correctness:
-* Uncomment the test line in main (line 268)
+* Uncomment the test line in main (line 269)
 * Outputs the L2 norm of the difference matrix between my implementation and the Eigen library implementation. Close to 0 means correct.
 * Only works for matmul_ikj_arr and below
 
@@ -54,13 +54,13 @@ PROBLEM 3:
 Adjust number of threads with omp_set_num_threads() in main.
 Adjust matrix size with N in main.
 Adjust block size with BLOCK_SIZE in main.
-Change function on line 162.
+Change function on line 163.
 
 Compile: g++ p3/problem3.cpp -fopenmp -O2 -march=native -o p3/problem3
 Run: p3/problem3
 
 Verify correctness:
-Uncomment the test line on line 168
+Uncomment the test line on line 169
 
 Compare with numpy:
 Comment out line 2 in test.py and run
