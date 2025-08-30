@@ -5,6 +5,7 @@
 #include <x86intrin.h>
 #include <eigen3/Eigen/Dense>
 #include <omp.h>
+#include <new>
 
 
 double* generate_matrix_arr(const int size, const bool align = false) {
@@ -27,9 +28,9 @@ double* generate_matrix_arr(const int size, const bool align = false) {
 
 double* generate_empty_arr(const int size, const bool align = false) {
     if (align) {
-        return new(std::align_val_t(32)) double[size * size];
+        return new(std::align_val_t(32)) double[size * size]{};
     } else {
-        return new double[size * size];
+        return new double[size * size]{};
     }
 }
 
@@ -159,13 +160,13 @@ int main() {
     auto result_matrix = generate_empty_arr(N, true);
 
     auto start_time = std::chrono::steady_clock::now();
-    matmul_outer_schedule(matrix_a, matrix_b, result_matrix, N, BLOCK_SIZE);
+    matmul_inner(matrix_a, matrix_b, result_matrix, N, BLOCK_SIZE);
     auto end_time = std::chrono::steady_clock::now();
     int execution_time = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
 
     std::cout << execution_time << '\n';
 
-    test(matrix_a, matrix_b, result_matrix, N);
+    //test(matrix_a, matrix_b, result_matrix, N);
     
     delete[] matrix_a;
     delete[] matrix_b;

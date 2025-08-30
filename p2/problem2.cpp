@@ -4,6 +4,7 @@
 #include <chrono>
 #include <x86intrin.h>
 #include <eigen3/Eigen/Dense>
+#include <new>
 
 std::vector<std::vector<double>> generate_matrix(const int size) {
     std::random_device seed;
@@ -44,9 +45,9 @@ double* generate_matrix_arr(const int size, const bool align = false) {
 
 double* generate_empty_arr(const int size, const bool align = false) {
     if (align) {
-        return new(std::align_val_t(32)) double[size * size];
+        return new(std::align_val_t(32)) double[size * size]{};
     } else {
-        return new double[size * size];
+        return new double[size * size]{};
     }
 }
 
@@ -251,27 +252,27 @@ void test(double* matrix_a, double* matrix_b, double* result_matrix, const int N
 
 int main() {
     const int N = 2048;
-    const int BLOCK_SIZE = 128;
+    const int BLOCK_SIZE = 32;
     
-    auto matrix_a = generate_matrix_arr(N, true);
-    auto matrix_b = generate_matrix_arr(N, true);
+    auto matrix_a = generate_matrix(N);
+    auto matrix_b = generate_matrix(N);
 
-    auto result_matrix = generate_empty_arr(N, true);
+    auto result_matrix = generate_empty(N);
 
     auto start_time = std::chrono::steady_clock::now();
-    matmul_ikj_arr_blocking_vector_aligned_packing(matrix_a, matrix_b, result_matrix, N, BLOCK_SIZE);
+    matmul_ijk(matrix_a, matrix_b, result_matrix, N);
     auto end_time = std::chrono::steady_clock::now();
     int execution_time = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
 
     std::cout << execution_time << '\n';
-
     
     //test(matrix_a, matrix_b, result_matrix, N);
     
+    /*
     delete[] matrix_a;
     delete[] matrix_b;
     delete[] result_matrix;
-    
+    */
     
     return 0;
 }
