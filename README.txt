@@ -1,66 +1,47 @@
-PROBLEM 1:
+# Matrix Multiplication Optimization
 
-Compile:
-g++ p1/problem1.cpp -o p1/problem1
+This project explores performance optimization techniques for dense matrix multiplication in C++. The implementations progressively improve performance through memory layout optimizations, cache-aware algorithms, SIMD vectorization, and multithreading.
 
-Run:
-p1/problem1
+## Optimization Techniques
 
-Change matrix size by adjusting N in main
+- Loop reordering
+- Contiguous memory layout
+- Compiler optimization flags
+- Cache blocking
+- AVX2 SIMD vectorization
+- Aligned memory access
+- Block packing
+- OpenMP multithreading
 
------------------------------------------------------
+## Benchmark Results
 
-PROBLEM 2
+| Implementation | Runtime (ms) |
+|---|---:|
+| Baseline (ijk) | 104021 |
+| Loop reordered (ikj) | 42817 |
+| Contiguous arrays | 22863 |
+| Compiler optimizations (-O2) | 5325 |
+| Cache blocking | 2939 |
+| AVX2 vectorization | 1662 |
+| Aligned loads/stores | 1559 |
+| Block packing | 882 |
+| OpenMP multithreading | 278 |
+| NumPy (for comparison) | 263 |
 
-Instructions vary depending on which implementation is used
-* Matmul function selected on line 263
-* Matrix size changed by adjusting N in main
+## Project Structure
 
-For the first six (matmul_ijk, matmul_jik, matmul_ikj, matmul_kij, matmul_jki, matmul_kji):
+The project is divided into three stages:
 
-Compile: g++ p2/problem2.cpp -march=native -o p2/problem2
-Run: p2/problem2
+- **P1** – Baseline matrix multiplication using a straightforward `ijk` loop order
+- **P2** – Single-threaded optimizations, including loop reordering, contiguous memory layout, cache blocking, AVX2 vectorization, aligned memory access, and block packing
+- **P3** – Multithreaded implementation using OpenMP, building on the optimized single-threaded version
 
-For matmul_ikj_arr and below:
+## Technologies
 
-* Change generate_matrix to generate_matrix_arr for both A and B in main
-* Change generate_empty to generate_empty_arr in main
-* Uncomment lines 272-274 to deallocate the arrays after use
+- C++
+- AVX2 intrinsics
+- OpenMP
 
-For matmul_ikj_arr_blocking and below:
+## Notes
 
-* Enable -O2 optimization
-    * Compile: g++ p2/problem2.cpp -O2 -march=native -o p2/problem2
-    * Run: p2/problem2
-* Block size adjusted with BLOCK_SIZE in main
-* Include BLOCK_SIZE as an argument to the matmul function
-
-For matmul_ikj_arr_blocking_vector_aligned and below:
-
-* Set align to true in generate_matrix_arr and generate_empty_arr
-
-Verify correctness:
-* Uncomment the test line in main (line 269)
-* Outputs the L2 norm of the difference matrix between my implementation and the Eigen library implementation. Close to 0 means correct.
-* Only works for matmul_ikj_arr and below
-
-Compare with numpy:
-Run test.py. Keep line 2 uncommented.
-
-----------------------------------------------
-
-PROBLEM 3:
-
-Adjust number of threads with omp_set_num_threads() in main.
-Adjust matrix size with N in main.
-Adjust block size with BLOCK_SIZE in main.
-Change function on line 163.
-
-Compile: g++ p3/problem3.cpp -fopenmp -O2 -march=native -o p3/problem3
-Run: p3/problem3
-
-Verify correctness:
-Uncomment the test line on line 169
-
-Compare with numpy:
-Comment out line 2 in test.py and run
+The repository contains multiple implementations used throughout the optimization process. Matrix size, block size, thread count and active implementation can be configured directly in the source files.
